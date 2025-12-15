@@ -1,0 +1,17 @@
+#version 330 core
+layout(location = 0) in vec2 vertexPosition_modelspace;
+layout(location = 1) in vec3 vertexColor;
+uniform float ratio;
+uniform float reduce_size;
+out vec4 fragmentColor;
+void main() {
+	if(ratio < 1) {
+		gl_Position.xy = vertexPosition_modelspace * vec2(ratio,1);
+	} else {
+		gl_Position.xy = vertexPosition_modelspace * vec2(1,1/ratio);
+	}
+	gl_Position.z = 0.0;
+	gl_Position.xyz = gl_Position.xyz * vec3(0.95f * reduce_size, 0.95f * reduce_size, 0.95f * reduce_size);
+	gl_Position.w = 1.0;
+	fragmentColor = vec4(vertexColor, 1);
+}
